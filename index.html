@@ -5,28 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>룰렛 게임</title>
     <link rel="stylesheet" href="style.css">
+    <!-- SheetJS 라이브러리 (엑셀 파일 생성용) -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>🎰 룰렛 게임</h1>
-        
-        <div class="roulette-container">
-            <div class="roulette-wheel" id="rouletteWheel">
-                <div class="roulette-section" data-value="1" style="--rotation: 0deg">1</div>
-                <div class="roulette-section" data-value="2" style="--rotation: 45deg">2</div>
-                <div class="roulette-section" data-value="3" style="--rotation: 90deg">3</div>
-                <div class="roulette-section" data-value="4" style="--rotation: 135deg">4</div>
-                <div class="roulette-section" data-value="5" style="--rotation: 180deg">5</div>
-                <div class="roulette-section" data-value="6" style="--rotation: 225deg">6</div>
-                <div class="roulette-section" data-value="7" style="--rotation: 270deg">7</div>
-                <div class="roulette-section" data-value="8" style="--rotation: 315deg">8</div>
-            </div>
-            <div class="roulette-pointer"></div>
+        <div class="header-actions">
+            <h1>🎰 룰렛 게임</h1>
+            <button id="adminButton" class="admin-button">관리자</button>
         </div>
         
-        <div class="controls">
-            <button id="spinButton" class="spin-button">돌리기</button>
-            <div class="result" id="result"></div>
+        <!-- 관리자 페이지 -->
+        <div class="admin-panel" id="adminPanel" style="display: none;">
+            <h2>📊 참여자 관리</h2>
+            <div class="admin-controls">
+                <button id="refreshButton" class="admin-control-btn">새로고침</button>
+                <button id="clearAllButton" class="admin-control-btn danger">전체 삭제</button>
+                <button id="exportJsonButton" class="admin-control-btn">JSON 내보내기</button>
+                <button id="exportExcelButton" class="admin-control-btn">엑셀 내보내기</button>
+            </div>
+            <div class="participants-list" id="participantsList"></div>
+            <button id="closeAdminButton" class="close-admin-button">닫기</button>
+        </div>
+        
+        <!-- 참여자 정보 입력 폼 -->
+        <div class="participant-form" id="participantForm">
+            <h2>참여자 정보 입력</h2>
+            <div class="form-group">
+                <label for="participantName">이름</label>
+                <input type="text" id="participantName" placeholder="이름을 입력하세요" maxlength="20">
+            </div>
+            <div class="form-group">
+                <label for="participantPhone">전화번호 뒷자리 4자리</label>
+                <input type="text" id="participantPhone" placeholder="예: 1234" maxlength="4" pattern="[0-9]{4}">
+            </div>
+            <button id="submitButton" class="submit-button">참여하기</button>
+            <div class="error-message" id="errorMessage"></div>
+        </div>
+        
+        <!-- 룰렛 게임 영역 (참여 후에만 표시) -->
+        <div class="roulette-game" id="rouletteGame" style="display: none;">
+            <div class="participant-info">
+                <p>참여자: <span id="currentParticipantName"></span></p>
+            </div>
+            
+            <div class="roulette-container">
+                <div class="roulette-wheel" id="rouletteWheel">
+                    <div class="roulette-section" data-value="1" style="--rotation: 0deg">1</div>
+                    <div class="roulette-section" data-value="2" style="--rotation: 45deg">2</div>
+                    <div class="roulette-section" data-value="3" style="--rotation: 90deg">3</div>
+                    <div class="roulette-section" data-value="4" style="--rotation: 135deg">4</div>
+                    <div class="roulette-section" data-value="5" style="--rotation: 180deg">5</div>
+                    <div class="roulette-section" data-value="6" style="--rotation: 225deg">6</div>
+                    <div class="roulette-section" data-value="7" style="--rotation: 270deg">7</div>
+                    <div class="roulette-section" data-value="8" style="--rotation: 315deg">8</div>
+                </div>
+                <div class="roulette-pointer"></div>
+            </div>
+            
+            <div class="controls">
+                <button id="spinButton" class="spin-button">돌리기</button>
+                <div class="result" id="result"></div>
+                <button id="resetButton" class="reset-button" style="display: none;">처음으로 돌아가기</button>
+            </div>
         </div>
     </div>
     
