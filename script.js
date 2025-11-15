@@ -465,11 +465,6 @@ function exportParticipantsJSON() {
     URL.revokeObjectURL(url);
 }
 
-// 모바일 기기 감지
-function isMobileDevice() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
-
 // 데이터 내보내기 (엑셀 파일로 다운로드)
 function exportParticipantsExcel() {
     const participants = getParticipants();
@@ -515,34 +510,8 @@ function exportParticipantsExcel() {
     // 파일명 생성
     const fileName = `roulette_participants_${new Date().toISOString().split('T')[0]}.xlsx`;
     
-    // 모바일 기기인지 확인
-    if (isMobileDevice()) {
-        // 모바일: Blob을 사용하여 파일 생성 후 공유/다운로드
-        const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-        const blob = new Blob([wbout], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-        
-        // iOS Safari의 경우
-        if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-            // iOS에서는 새 창으로 열기
-            const url = URL.createObjectURL(blob);
-            window.open(url, '_blank');
-            setTimeout(() => URL.revokeObjectURL(url), 100);
-            alert('파일이 새 창에서 열립니다. 다운로드하려면 공유 버튼을 사용하세요.');
-        } else {
-            // Android 등 다른 모바일: 다운로드 링크 생성
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = fileName;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            setTimeout(() => URL.revokeObjectURL(url), 100);
-        }
-    } else {
-        // 데스크톱: 일반 다운로드
-        XLSX.writeFile(wb, fileName);
-    }
+    // 파일 다운로드
+    XLSX.writeFile(wb, fileName);
 }
 
 // 관리자 패널 열기/닫기
