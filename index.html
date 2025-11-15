@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>룰렛 게임</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎰 룰렛 게임</h1>
+        
+        <div class="roulette-container">
+            <div class="roulette-wheel" id="rouletteWheel">
+                <div class="roulette-section" data-value="1" style="--rotation: 0deg">1</div>
+                <div class="roulette-section" data-value="2" style="--rotation: 45deg">2</div>
+                <div class="roulette-section" data-value="3" style="--rotation: 90deg">3</div>
+                <div class="roulette-section" data-value="4" style="--rotation: 135deg">4</div>
+                <div class="roulette-section" data-value="5" style="--rotation: 180deg">5</div>
+                <div class="roulette-section" data-value="6" style="--rotation: 225deg">6</div>
+                <div class="roulette-section" data-value="7" style="--rotation: 270deg">7</div>
+                <div class="roulette-section" data-value="8" style="--rotation: 315deg">8</div>
+            </div>
+            <div class="roulette-pointer"></div>
+        </div>
+        
+        <div class="controls">
+            <button id="spinButton" class="spin-button">돌리기</button>
+            <div class="result" id="result"></div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
+
